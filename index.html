@@ -49,7 +49,7 @@ AFRAME.registerComponent('hit-handler', {
    
     <a-entity class="target" hit-handler geometry="primitive: box" material="src: idle.png"></a-entity>
 
-    <a-entity class="target" target="healthPoints: 10" hit-handler geometry="primitive: box" material="src: originalTexture.jpg position="0 0 -4" hit-handler ></a-entity>
+    <a-entity class="target" target="healthPoints: 10" hit-handler geometry="primitive: box" width="10" height="10" material="src: originalTexture.jpg position="0 0 -4" hit-handler ></a-entity>
 
     <a-entity id="gun" shooter geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.3" material="color: red" click-to-shoot position="0 0 -1" wasd-controls></a-entity>
 
