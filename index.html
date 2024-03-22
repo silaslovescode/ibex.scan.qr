@@ -29,13 +29,13 @@ AFRAME.registerComponent('hit-handler', {
 
     // Listen for the 'hit' event
     el.addEventListener('hit', () => {
-      // Change the material texture to a new one (e.g., 'newTexture.jpg')
-      el.setAttribute('material', 'src', 'newTexture.jpg');
+      // Change the material texture to a new one (e.g., 'death.png')
+      el.setAttribute('material', 'src', 'idle.png');
     });
 
     // Restore the original texture when the entity 'dies'
     el.addEventListener('die', () => {
-      el.setAttribute('material', 'src', originalTexture);
+      el.setAttribute('material', 'src', death.png);
     });
   }
 });
@@ -47,7 +47,7 @@ AFRAME.registerComponent('hit-handler', {
   <a-scene background="color: #DADADA">
     <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
    
-    <a-entity class="target" hit-handler geometry="primitive: box" material="src: originalTexture.jpg"></a-entity>
+    <a-entity class="target" hit-handler geometry="primitive: box" material="src: idle.png"></a-entity>
 
     <a-entity class="target" target="healthPoints: 10" hit-handler geometry="primitive: box" material="src: originalTexture.jpg position="0 0 -4" hit-handler ></a-entity>
 
