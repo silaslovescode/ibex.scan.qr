@@ -20,36 +20,35 @@
     /**
      * Change color when hit.
      */
-AFRAME.registerComponent('hit-handler', {
-  dependencies: ['material'],
+    AFRAME.registerComponent('hit-handler', {
+      dependencies: ['material'],
 
-  init: function () {
-    const el = this.el;
-    const originalTexture = el.getAttribute('material').src; // Store the original texture
+      init: function () {
+        var color;
+        var el = this.el;
 
-    // Listen for the 'hit' event
-    el.addEventListener('hit', () => {
-      // Change the material texture to a new one (e.g., 'death.png')
-      el.setAttribute('material', 'src', 'idle.png');
+        color = new THREE.Color();
+        color.set('#666');
+        el.components.material.material.color.copy(color);
+        el.addEventListener('hit', () => {
+          color.addScalar(0.05);
+          el.components.material.material.color.copy(color);
+        });
+
+        el.addEventListener('die', () => {
+          color.setRGB(1, 0, 0);
+          el.components.material.material.color.copy(color);
+        });
+      }
     });
-
-    // Restore the original texture when the entity 'dies'
-    el.addEventListener('die', () => {
-      el.setAttribute('material', 'src', death.png);
-    });
-  }
-});
-
   </script>
 </head>
 
 <body>
   <a-scene background="color: #DADADA">
     <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
-   
-    <a-entity class="target" hit-handler geometry="primitive: box" material="src: idle.png"></a-entity>
 
-    <a-entity class="target" target="healthPoints: 10" hit-handler geometry="primitive: box" width="10" height="10" material="src: originalTexture.jpg position="0 0 -4" hit-handler ></a-entity>
+    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="0 0 -4" hit-handler ></a-entity>
 
     <a-entity id="gun" shooter geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.3" material="color: red" click-to-shoot position="0 0 -1" wasd-controls></a-entity>
 
@@ -74,7 +73,7 @@ AFRAME.registerComponent('hit-handler', {
         <a-entity light="type: directional; color: white; intensity: 5; position: -0.5 1 1"></a-entity>
 
         <!-- Add a camera that follows the cube -->
-        <a-entity id="camera" camera position="0 10 0" rotation="-90 0 0" wasd-controls></a-entity>
+        <a-entity id="camera" camera position="0 90 0" rotation="-90 0 0" wasd-controls></a-entity>
 
         <!-- Add a sky element to create a 3D space -->
           <a-assets>
