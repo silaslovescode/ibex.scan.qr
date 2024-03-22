@@ -46,44 +46,13 @@
 
 <body>
   <a-scene background="color: #DADADA">
-  <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
-  <a-entity id="randomBox" class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" hit-handler></a-entity>
-  <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-      function getRandomPosition(min, max) {
-        return Math.random() * (max - min) + min;
-      }
+    <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
 
-      const box = document.querySelector('#randomBox');
-      const minX = -5; // Define minimum X boundary
-      const maxX = 5;  // Define maximum X boundary
-      const minY = 0;  // Define minimum Y boundary
-      const maxY = 10; // Define maximum Y boundary
-      const minZ = -5; // Define minimum Z boundary
-      const maxZ = 5;  // Define maximum Z boundary
-
-      // Set random position within boundaries
-      box.setAttribute('position', {
-        x: getRandomPosition(minX, maxX),
-        y: getRandomPosition(minY, maxY),
-        z: getRandomPosition(minZ, maxZ)
-      });
-    });
-  </script>
-
-    
     <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="0 0 -4" hit-handler ></a-entity>
 
     <a-entity id="gun" shooter geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.3" material="color: red" click-to-shoot position="0 0 -1" wasd-controls></a-entity>
 
     <a-camera id="camera" position="-1 0 0" shooter click-to-shoot" wasd-controls></a-camera>
-        <a-assets>
-            <img id="grid" src="1.png">
-            <a-assets>
-                <a-asset-item id="scene" src="1.gltf"></a-asset-item>
-            </a-assets>
-        </a-assets>
-
         <!-- Add a box (our cube) -->
         <a-box id="rubiks-cube" color="#FFFFFF" position="0 1 0" wasd-controls></a-box>
 
@@ -135,6 +104,70 @@
             // Add the follow-cube component to the scene
             document.querySelector('a-scene').setAttribute('follow-cube', '');
         </script>
+        <a-entity camera position="0 0 3" look-controls></a-entity>
+        <a-entity geometry="primitive: plane; width: 4; height: 4;" material="color: grey;"></a-entity>
+        <a-entity geometry="primitive: plane; width: 4; height: 4;" material="color: grey;"></a-entity>
+
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-0.5 0.5 0"></a-entity>
+        <a-text value="X: -0.5, Y: 0.5, Z: 0" position="-0.5 0.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-1.5 1.5 0"></a-entity>
+        <a-text value="X: -1.5, Y: 1.5, Z: 0" position="-1.5 1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-0.5 -0.5 0"></a-entity>
+        <a-text value="X: -0.5, Y: -0.5, Z: 0" position="-0.5 -0.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="0.5 -0.5 0"></a-entity>
+        <a-text value="X: 0.5, Y: -0.5, Z: 0" position="0.5 -0.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-0.5 1.5 0"></a-entity>
+        <a-text value="X: -0.5, Y: 1.5, Z: 0" position="-0.5 1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="0.5 -1.5 0"></a-entity>
+        <a-text value="X: 0.5, Y: -1.5, Z: 0" position="0.5 -1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="0.5 1.5 0"></a-entity>
+        <a-text value="X: 0.5, Y: 1.5, Z: 0" position="0.5 1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-0.5 -1.5 0"></a-entity>
+        <a-text value="X: -0.5, Y: -1.5, Z: 0" position="-0.5 -1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;" position="1.5 1.5 0"></a-entity>
+        <a-text value="X: 1.5, Y: 1.5, Z: 0" position="1.5 1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-1.5 -1.5 0"></a-entity>
+        <a-text value="X: -1.5, Y: -1.5, Z: 0" position="-1.5 -1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-1.5 -0.5 0"></a-entity>
+        <a-text value="X: -1.5, Y: -0.5, Z: 0" position="-1.5 -0.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="1.5 -1.5 0"></a-entity>
+        <a-text value="X: 1.5, Y: -1.5, Z: 0" position="1.5 -1.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="1.5 -0.5 0"></a-entity>
+        <a-text value="X: 1.5, Y: -0.5, Z: 0" position="1.5 -0.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="-1.5 -0.5 0"></a-entity>
+        <a-text value="X: -1.5, Y: -0.5, Z: 0" position="-1.5  0.5  0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="1.5 -0.5 0"></a-entity>
+        <a-text value="X: 1.5, Y: -0.5, Z: 0" position="1.5  -0.5  0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="1.5 0.5 0"></a-entity>
+        <a-text value="X: 1.5, Y: 0.5, Z: 0" position="1.5  0.5  0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+        <a-entity geometry="primitive: plane; width: 1; height: 1;" material="color: grey;"position="0.5 0.5 0"></a-entity>
+        <a-text value="X: 0.5, Y: 0.5, Z: 0" position="0.5 0.5 0.05" color="#ffffff" align="center" scale="0.5 0.5 0.5"></a-text>
+
+
+
+    </a-scene>
+
+
+
+</body>
+</html>
     </a-scene>
 </body>
 </html>
