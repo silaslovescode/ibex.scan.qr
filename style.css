@@ -1,0 +1,20 @@
+/* CSS for shooting effect */
+@keyframes shooting-effect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.shooting-bullet {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: purple;
+  border-radius: 50%;
+  animation: shooting-effect 0.5s linear forwards;
+}
