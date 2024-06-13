@@ -7,42 +7,7 @@
   <script src="aframe-super-shooter-kit.js"></script>
   <script src="aframe-super-shooter-kit.min.js"></script>
   <script src="aframe.min.js"></script>
-  <script>
-    /**
-     * Click mouse to shoot.
-     */
-    AFRAME.registerComponent('click-to-shoot', {
-      init: function () {
-        document.body.addEventListener('mousedown', () => { this.el.emit('shoot'); });
-      }
-    });
-
-    /**
-     * Change color when hit.
-     */
-    AFRAME.registerComponent('hit-handler', {
-      dependencies: ['material'],
-
-      init: function () {
-        var color;
-        var el = this.el;
-
-        color = new THREE.Color();
-        color.set('#666');
-        el.components.material.material.color.copy(color);
-        el.addEventListener('hit', () => {
-          color.addScalar(0.05);
-          el.components.material.material.color.copy(color);
-        });
-
-        el.addEventListener('die', () => {
-          color.setRGB(1, 0, 0);
-          el.components.material.material.color.copy(color);
-        });
-      }
-    });
-  </script>
-    <style>
+  <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -55,23 +20,16 @@
     p {
       color: #666;
     }
-    .button-container {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
-    .payment-button {
-      border: none;
-      width: 200px;
-      height: 50px;
-      background-color: #4CAF50; /* Green */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #4CAF50;
       color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .payment-button:hover {
-      background-color: #45a049; /* Darker green */
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: none;
+      z-index: 9999;
     }
   </style>
 </head>
@@ -85,71 +43,94 @@
     <a-entity id="gun" shooter geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.3" material="color: red" click-to-shoot position="0 0 -1" wasd-controls></a-entity>
 
     <a-camera id="camera" position="-1 0 0" shooter click-to-shoot" wasd-controls></a-camera>
-        <a-assets>
-            <img id="grid" src="1.png">
-          
-            <a-assets>
-                <a-asset-item id="scene" src="1.gltf"></a-asset-item>
-            </a-assets>
-        </a-assets>
-         <!-- Button to create payment -->
-       <iframe src="create_payment.html" width="200" height="50" style="border: none;"></iframe>
-  
-       <!-- Button to send payment -->
-       <iframe src="send_payment.html" width="200" height="50" style="border: none;"></iframe>
-  
-       <!-- Button to receive payment -->
-       <iframe src="receive_payment.html" width="200" height="50" style="border: none;"></iframe>
-        <!-- Add a box (our cube) -->
-        <a-box id="rubiks-cube" color="#FFFFFF" position="0 1 0" wasd-controls></a-box>
 
-        <!-- Add a ground plane -->
-        <a-plane src="#grid" transparent="true" rotation="-90 0 0" width="100" height="100"></a-plane> 
-        <!-- Ambient Light -->
-        <a-entity light="type: ambient; color: #CCC; intensity: 0.5" rotation="-90 0 0"></a-entity>
+    <!-- Notification message -->
+    <div class="notification" id="notification"></div>
 
-        <!-- Directional Light -->
-        <a-entity light="type: directional; color: white; intensity: 5; position: -0.5 1 1"></a-entity>
+    <a-assets>
+      <img id="grid" src="1.png">
+      
+      <a-assets>
+          <a-asset-item id="scene" src="1.gltf"></a-asset-item>
+      </a-assets>
+    </a-assets>
 
-        <!-- Add a camera that follows the cube -->
-        <a-entity id="camera" camera position="0 90 0" rotation="-90 0 0" wasd-controls></a-entity>
+    <!-- Add a box (our cube) -->
+    <a-box id="rubiks-cube" color="#FFFFFF" position="0 1 0" wasd-controls></a-box>
 
-        <!-- Add a sky element to create a 3D space -->
-          <a-assets>
-            <img id="sky" src="sky.jpg">
-         </a-assets>
-        <a-sky color="#ECECEC"></a-sky>
-        <a-sky src="#sky"></a-sky>
+    <!-- Add a ground plane -->
+    <a-plane src="#grid" transparent="true" rotation="-90 0 0" width="100" height="100"></a-plane> 
+    <!-- Ambient Light -->
+    <a-entity light="type: ambient; color: #CCC; intensity: 0.5" rotation="-90 0 0"></a-entity>
 
-        <!-- Rotate the cube based on keyboard input -->
-        <script>
-            const cube = document.querySelector('#rubiks-cube');
-            const camera = document.querySelector('#camera');
+    <!-- Directional Light -->
+    <a-entity light="type: directional; color: white; intensity: 5; position: -0.5 1 1"></a-entity>
 
-            // Define the boundaries of the plane
-            const minX = -49;
-            const maxX = 49;
-            const minZ = -49;
-            const maxZ = 49;
+    <!-- Add a camera that follows the cube -->
+    <a-entity id="camera" camera position="0 90 0" rotation="-90 0 0" wasd-controls></a-entity>
 
-            // Use A-Frame's tick function for smoother animation
-            AFRAME.registerComponent('follow-cube', {
-                tick: function () {
-                    // Make the camera follow the cube with an offset
-                    camera.object3D.position.x = cube.object3D.position.x + 5;
-                    camera.object3D.position.z = cube.object3D.position.z + 5;
+    <!-- Add a sky element to create a 3D space -->
+    <a-assets>
+      <img id="sky" src="sky.jpg">
+    </a-assets>
+    <a-sky color="#ECECEC"></a-sky>
+    <a-sky src="#sky"></a-sky>
 
-                    // Check the boundaries of the plane
-                    if (cube.object3D.position.x < minX) cube.object3D.position.x = minX;
-                    if (cube.object3D.position.x > maxX) cube.object3D.position.x = maxX;
-                    if (cube.object3D.position.z < minZ) cube.object3D.position.z = minZ;
-                    if (cube.object3D.position.z > maxZ) cube.object3D.position.z = maxZ;
-                }
-            });
+    <!-- Rotate the cube based on keyboard input -->
+    <script>
+      const cube = document.querySelector('#rubiks-cube');
+      const camera = document.querySelector('#camera');
 
-            // Add the follow-cube component to the scene
-            document.querySelector('a-scene').setAttribute('follow-cube', '');
-        </script>
-    </a-scene>
+      // Define the boundaries of the plane
+      const minX = -49;
+      const maxX = 49;
+      const minZ = -49;
+      const maxZ = 49;
+
+      // Use A-Frame's tick function for smoother animation
+      AFRAME.registerComponent('follow-cube', {
+          tick: function () {
+              // Make the camera follow the cube with an offset
+              camera.object3D.position.x = cube.object3D.position.x + 5;
+              camera.object3D.position.z = cube.object3D.position.z + 5;
+
+              // Check the boundaries of the plane
+              if (cube.object3D.position.x < minX) cube.object3D.position.x = minX;
+              if (cube.object3D.position.x > maxX) cube.object3D.position.x = maxX;
+              if (cube.object3D.position.z < minZ) cube.object3D.position.z = minZ;
+              if (cube.object3D.position.z > maxZ) cube.object3D.position.z = maxZ;
+          }
+      });
+
+      // Add the follow-cube component to the scene
+      document.querySelector('a-scene').setAttribute('follow-cube', '');
+
+      // Shooting functionality
+      document.body.addEventListener('mousedown', () => {
+        const target = document.querySelector('.target');
+        const notification = document.getElementById('notification');
+
+        if (target) {
+          // Reduce target health points
+          const healthPoints = parseInt(target.getAttribute('target').split(':')[1]);
+          target.setAttribute('target', 'healthPoints', healthPoints - 1);
+
+          // Show notification
+          notification.innerText = '1 sat received!';
+          notification.style.display = 'block';
+
+          // Hide notification after 2 seconds
+          setTimeout(() => {
+            notification.style.display = 'none';
+          }, 2000);
+
+          // Emit 'hit' event if target health points reach 0
+          if (healthPoints - 1 <= 0) {
+            target.emit('die');
+          }
+        }
+      });
+    </script>
+  </a-scene>
 </body>
 </html>
