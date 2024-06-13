@@ -4,148 +4,66 @@
   <title>A-Frame Super Shooter Kit - Basic</title>
   <meta charset="utf-8">
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-  <script src="aframe-super-shooter-kit.js"></script>
-  <script src="aframe-super-shooter-kit.min.js"></script>
-  <script src="aframe.min.js"></script>
-  <script>
-    /**
-     * Click mouse to shoot.
-     */
-    AFRAME.registerComponent('click-to-shoot', {
-      init: function () {
-        document.body.addEventListener('mousedown', () => { this.el.emit('shoot'); });
-      }
-    });
-
-    /**
-     * Change color when hit.
-     */
-AFRAME.registerComponent('hit-handler', {
-  dependencies: ['material'],
-
-  init: function () {
-    var opacity;
-    var el = this.el;
-
-    opacity = el.components.material.material.opacity;
-
-    el.addEventListener('hit', () => {
-      opacity -= 0.1; // Decrease opacity when hit
-      if (opacity <= 0) {
-        opacity = 0; // Ensure opacity doesn't go below 0
-        el.emit('die'); // Emit die event when opacity reaches 0
-      }
-      el.setAttribute('material', 'opacity', opacity);
-    });
-
-    el.addEventListener('die', () => {
-      // Additional logic for handling when the target "dies"
-    });
-  }
-});
-
-AFRAME.registerComponent('random-movement', {
-  init: function () {
-    // Define boundaries for random movement
-    const minX = -10; // Adjust as needed
-    const maxX = 10; // Adjust as needed
-    const minZ = -10; // Adjust as needed
-    const maxZ = 10; // Adjust as needed
-
-    // Randomly move the entity within boundaries
-    this.el.object3D.position.x = Math.random() * (maxX - minX) + minX;
-    this.el.object3D.position.z = Math.random() * (maxZ - minZ) + minZ;
-
-    // Animate the entity's position continuously
-    this.el.addEventListener('componentchanged', (evt) => {
-      if (evt.detail.name === 'position') {
-        // Generate new random position if the entity reaches the boundary
-        if (
-          this.el.object3D.position.x <= minX ||
-          this.el.object3D.position.x >= maxX ||
-          this.el.object3D.position.z <= minZ ||
-          this.el.object3D.position.z >= maxZ
-        ) {
-          this.el.object3D.position.x = Math.random() * (maxX - minX) + minX;
-          this.el.object3D.position.z = Math.random() * (maxZ - minZ) + minZ;
-        }
-      }
-    });
-  }
-});
-    
-
-  </script>
 </head>
 
 <body>
   <a-scene background="color: #DADADA">
-    <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
+    <a-assets>
+      <img id="grid" src="1.png">
+    </a-assets>
 
-    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: red" position="0 0 -4" hit-handler random-movement></a-entity>
-    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: red" position="0 0 -4" hit-handler random-movement></a-entity>
+    <a-plane id="ground" src="#grid" transparent="true" rotation="-90 0 0" width="100" height="100"></a-plane>
 
-    <a-entity id="gun" shooter geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.3" material="color: red" click-to-shoot position="0 0 -1" wasd-controls></a-entity>
+    <!-- Add targets dynamically -->
+    <script>
+      AFRAME.registerComponent('random-movement', {
+        init: function () {
+          const ground = document.querySelector('#ground');
+          const groundWidth = ground.getAttribute('width');
+          const groundHeight = ground.getAttribute('height');
+          const minX = -groundWidth / 2;
+          const maxX = groundWidth / 2;
+          const minZ = -groundHeight / 2;
+          const maxZ = groundHeight / 2;
 
-    <a-camera id="camera" position="-1 0 0" shooter click-to-shoot" wasd-controls></a-camera>
-        <a-assets>
-            <img id="grid" src="1.png">
-          
-            <a-assets>
-                <a-asset-item id="scene" src="1.gltf"></a-asset-item>
-            </a-assets>
-        </a-assets>
+          // Randomly move the entity within boundaries
+          this.el.object3D.position.x = Math.random() * (maxX - minX) + minX;
+          this.el.object3D.position.z = Math.random() * (maxZ - minZ) + minZ;
 
-        <!-- Add a box (our cube) -->
-        <a-box id="rubiks-cube" color="#FFFFFF" position="0 1 0" wasd-controls></a-box>
+          // Animate the entity's position continuously
+          this.el.addEventListener('componentchanged', (evt) => {
+            if (evt.detail.name === 'position') {
+              // Generate new random position if the entity reaches the boundary
+              if (
+                this.el.object3D.position.x <= minX ||
+                this.el.object3D.position.x >= maxX ||
+                this.el.object3D.position.z <= minZ ||
+                this.el.object3D.position.z >= maxZ
+              ) {
+                this.el.object3D.position.x = Math.random() * (maxX - minX) + minX;
+                this.el.object3D.position.z = Math.random() * (maxZ - minZ) + minZ;
+              }
+            }
+          });
+        }
+      });
 
-        <!-- Add a ground plane -->
-        <a-plane src="#grid" transparent="true" rotation="-90 0 0" width="100" height="100"></a-plane> 
-        <!-- Ambient Light -->
-        <a-entity light="type: ambient; color: #CCC; intensity: 0.5" rotation="-90 0 0"></a-entity>
+      // Create targets dynamically
+      for (let i = 0; i < 5; i++) {
+        const target = document.createElement('a-entity');
+        target.setAttribute('class', 'target');
+        target.setAttribute('geometry', 'primitive: box');
+        target.setAttribute('material', 'color: red');
+        target.setAttribute('position', '0 0 -4');
+        target.setAttribute('random-movement', '');
+        document.querySelector('a-scene').appendChild(target);
+      }
+    </script>
 
-        <!-- Directional Light -->
-        <a-entity light="type: directional; color: white; intensity: 5; position: -0.5 1 1"></a-entity>
-
-        <!-- Add a camera that follows the cube -->
-        <a-entity id="camera" camera position="0 90 0" rotation="-90 0 0" wasd-controls></a-entity>
-
-        <!-- Add a sky element to create a 3D space -->
-          <a-assets>
-            <img id="sky" src="sky.jpg">
-         </a-assets>
-        <a-sky color="#ECECEC"></a-sky>
-        <a-sky src="#sky"></a-sky>
-
-        <!-- Rotate the cube based on keyboard input -->
-        <script>
-            const cube = document.querySelector('#rubiks-cube');
-            const camera = document.querySelector('#camera');
-
-            // Define the boundaries of the plane
-            const minX = -49;
-            const maxX = 49;
-            const minZ = -49;
-            const maxZ = 49;
-
-            // Use A-Frame's tick function for smoother animation
-            AFRAME.registerComponent('follow-cube', {
-                tick: function () {
-                    // Make the camera follow the cube with an offset
-                    camera.object3D.position.x = cube.object3D.position.x + 5;
-                    camera.object3D.position.z = cube.object3D.position.z + 5;
-
-                    // Check the boundaries of the plane
-                    if (cube.object3D.position.x < minX) cube.object3D.position.x = minX;
-                    if (cube.object3D.position.x > maxX) cube.object3D.position.x = maxX;
-                    if (cube.object3D.position.z < minZ) cube.object3D.position.z = minZ;
-                    if (cube.object3D.position.z > maxZ) cube.object3D.position.z = maxZ;
-                }
-            });
-
-            // Add the follow-cube component to the scene
-            document.querySelector('a-scene').setAttribute('follow-cube', '');
-        </script>
-    </a-scene>
+    <!-- Lights and camera -->
+    <a-entity light="type: ambient; color: #CCC; intensity: 0.5" rotation="-90 0 0"></a-entity>
+    <a-entity light="type: directional; color: white; intensity: 5; position: -0.5 1 1"></a-entity>
+    <a-camera position="0 1.6 0"></a-camera>
+  </a-scene>
 </body>
 </html>
