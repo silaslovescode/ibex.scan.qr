@@ -3,6 +3,7 @@
 <head>
   <title>satoshooter</title>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css">
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   <script src="aframe-super-shooter-kit.js"></script>
   <script src="aframe-super-shooter-kit.min.js"></script>
@@ -31,6 +32,10 @@
 </head>
 <body>
   <a-scene background="color: #DADADA">
+    
+    <!-- Notification -->
+    <a-entity id="notification" position="0 3 -5" text="value: You won 1 satoshi!; align: center; color: white; wrapCount: 15;"></a-entity>
+
     <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
 
     <a-entity class="target" target="healthPoints: 10" geometry="primitive: box; width: 2; height: 2; depth: 2" material="color: teal" position="0 0 -4" hit-handler ></a-entity>
@@ -121,5 +126,25 @@
       }
     </script>
     </a-scene>
+  <div class="wallet-container">
+    <div class="wallet-header">
+      <h1>Non-Custodial Wallet</h1>
+    </div>
+    <div class="wallet-balance">
+      <h2>Wallet Balance</h2>
+      <p>Balance: <span id="balance">0 BTC</span></p>
+    </div>
+    <div class="wallet-actions">
+      <h2>Actions</h2>
+      <button id="send-button">Send Bitcoin</button>
+      <button id="receive-button">Receive Bitcoin</button>
+    </div>
+    <div class="wallet-transactions">
+      <h2>Transactions</h2>
+      <ul id="transaction-list">
+        <!-- Transactions will be dynamically added here -->
+      </ul>
+    </div>
+  </div>
 </body>
 </html>
