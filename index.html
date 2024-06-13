@@ -20,27 +20,30 @@
     /**
      * Change color when hit.
      */
-    AFRAME.registerComponent('hit-handler', {
-      dependencies: ['material'],
+AFRAME.registerComponent('hit-handler', {
+  dependencies: ['material'],
 
-      init: function () {
-        var color;
-        var el = this.el;
+  init: function () {
+    var opacity;
+    var el = this.el;
 
-        color = new THREE.Color();
-        color.set('#666');
-        el.components.material.material.color.copy(color);
-        el.addEventListener('hit', () => {
-          color.addScalar(0.05);
-          el.components.material.material.color.copy(color);
-        });
+    opacity = el.components.material.material.opacity;
 
-        el.addEventListener('die', () => {
-          color.setRGB(1, 0, 0);
-          el.components.material.material.color.copy(color);
-        });
+    el.addEventListener('hit', () => {
+      opacity -= 0.1; // Decrease opacity when hit
+      if (opacity <= 0) {
+        opacity = 0; // Ensure opacity doesn't go below 0
+        el.emit('die'); // Emit die event when opacity reaches 0
       }
+      el.setAttribute('material', 'opacity', opacity);
     });
+
+    el.addEventListener('die', () => {
+      // Additional logic for handling when the target "dies"
+    });
+  }
+});
+
   </script>
 </head>
 
