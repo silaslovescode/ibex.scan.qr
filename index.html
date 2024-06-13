@@ -23,6 +23,7 @@
         var el = this.el;
         el.addEventListener('hit', () => {
           el.setAttribute('visible', false); // Set visible to false to make the object invisible
+          document.querySelector('#notification').setAttribute('text', 'value', 'You won 1 satoshi!');
         });
       }
     });
