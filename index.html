@@ -20,61 +20,27 @@
     /**
      * Change color when hit.
      */
-AFRAME.registerComponent('hit-handler', {
-  dependencies: ['material'],
+    AFRAME.registerComponent('hit-handler', {
+      dependencies: ['material'],
 
-  init: function () {
-    var opacity;
-    var el = this.el;
+      init: function () {
+        var color;
+        var el = this.el;
 
-    opacity = el.components.material.material.opacity;
+        color = new THREE.Color();
+        color.set('#666');
+        el.components.material.material.color.copy(color);
+        el.addEventListener('hit', () => {
+          color.addScalar(0.05);
+          el.components.material.material.color.copy(color);
+        });
 
-    el.addEventListener('hit', () => {
-      opacity -= 0.1; // Decrease opacity when hit
-      if (opacity <= 0) {
-        opacity = 0; // Ensure opacity doesn't go below 0
-        el.emit('die'); // Emit die event when opacity reaches 0
-      }
-      el.setAttribute('material', 'opacity', opacity);
-    });
-
-    el.addEventListener('die', () => {
-      // Additional logic for handling when the target "dies"
-    });
-  }
-});
-
-AFRAME.registerComponent('random-movement', {
-  init: function () {
-    // Define boundaries for random movement
-    const minX = -10; // Adjust as needed
-    const maxX = 10; // Adjust as needed
-    const minZ = -10; // Adjust as needed
-    const maxZ = 10; // Adjust as needed
-
-    // Randomly move the entity within boundaries
-    this.el.object3D.position.x = Math.random() * (maxX - minX) + minX;
-    this.el.object3D.position.z = Math.random() * (maxZ - minZ) + minZ;
-
-    // Animate the entity's position continuously
-    this.el.addEventListener('componentchanged', (evt) => {
-      if (evt.detail.name === 'position') {
-        // Generate new random position if the entity reaches the boundary
-        if (
-          this.el.object3D.position.x <= minX ||
-          this.el.object3D.position.x >= maxX ||
-          this.el.object3D.position.z <= minZ ||
-          this.el.object3D.position.z >= maxZ
-        ) {
-          this.el.object3D.position.x = Math.random() * (maxX - minX) + minX;
-          this.el.object3D.position.z = Math.random() * (maxZ - minZ) + minZ;
-        }
+        el.addEventListener('die', () => {
+          color.setRGB(1, 0, 0);
+          el.components.material.material.color.copy(color);
+        });
       }
     });
-  }
-});
-    
-
   </script>
 </head>
 
@@ -82,8 +48,7 @@ AFRAME.registerComponent('random-movement', {
   <a-scene background="color: #DADADA">
     <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
 
-    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: red" position="0 0 -4" hit-handler random-movement></a-entity>
-    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: red" position="0 0 -4" hit-handler random-movement></a-entity>
+    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="0 0 -4" hit-handler ></a-entity>
 
     <a-entity id="gun" shooter geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.3" material="color: red" click-to-shoot position="0 0 -1" wasd-controls></a-entity>
 
