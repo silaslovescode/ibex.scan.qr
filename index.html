@@ -114,7 +114,24 @@
 
             // Add the follow-cube component to the scene
             document.querySelector('a-scene').setAttribute('follow-cube', '');
-        </script>
+      // Define the number of targets to create
+      var numTargets = 25;
+      
+      // Get the dimensions of the ground plane
+      var planeWidth = 100;
+      var planeHeight = 100;
+
+      // Calculate the spacing between targets
+      var spacingX = planeWidth / Math.ceil(Math.sqrt(numTargets));
+      var spacingZ = planeHeight / Math.ceil(Math.sqrt(numTargets));
+
+      // Create the targets
+      for (var i = 0; i < numTargets; i++) {
+        var x = (i % Math.ceil(Math.sqrt(numTargets))) * spacingX - planeWidth / 2;
+        var z = Math.floor(i / Math.ceil(Math.sqrt(numTargets))) * spacingZ - planeHeight / 2;
+        document.write('<a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="' + x + ' 0 ' + z + '" hit-handler></a-entity>');
+      }
+    </script>
     </a-scene>
 </body>
 </html>
