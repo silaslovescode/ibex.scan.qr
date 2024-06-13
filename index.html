@@ -60,10 +60,12 @@
       }
     </script>
 
-    <!-- Lights and camera -->
+    <!-- Lights -->
     <a-entity light="type: ambient; color: #CCC; intensity: 0.5" rotation="-90 0 0"></a-entity>
     <a-entity light="type: directional; color: white; intensity: 5; position: -0.5 1 1"></a-entity>
-    <a-camera position="0 1.6 0"></a-camera>
+
+    <!-- Camera with aerial view -->
+    <a-camera position="0 50 0" rotation="-90 0 0"></a-camera>
   </a-scene>
 </body>
 </html>
