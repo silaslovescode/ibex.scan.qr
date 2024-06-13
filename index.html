@@ -20,60 +20,30 @@
     /**
      * Change color when hit.
      */
-    AFRAME.registerComponent('hit-handler', {
-      dependencies: ['material'],
+AFRAME.registerComponent('hit-handler', {
+  dependencies: ['material'],
 
-      init: function () {
-        var color;
-        var el = this.el;
+  init: function () {
+    var color;
+    var el = this.el;
 
-        color = new THREE.Color();
-        color.set('#666');
-        el.components.material.material.color.copy(color);
-        el.addEventListener('hit', () => {
-          color.addScalar(0.05);
-          el.components.material.material.color.copy(color);
-        });
-
-        el.addEventListener('die', () => {
-          color.setRGB(1, 0, 0);
-          el.components.material.material.color.copy(color);
-        });
-      }
+    color = new THREE.Color();
+    color.set('#666');
+    el.components.material.material.color.copy(color);
+    el.addEventListener('hit', () => {
+      color.addScalar(0.05);
+      el.components.material.material.color.copy(color);
     });
+
+    el.addEventListener('die', () => {
+      // Set the alpha value to 0 to make the object transparent
+      color.setRGB(color.r, color.g, color.b, 0);
+      el.components.material.material.color.copy(color);
+    });
+  }
+});
+
   </script>
-    <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f4f4f4;
-    }
-    h1 {
-      color: #333;
-    }
-    p {
-      color: #666;
-    }
-    .button-container {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
-    .payment-button {
-      border: none;
-      width: 200px;
-      height: 50px;
-      background-color: #4CAF50; /* Green */
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .payment-button:hover {
-      background-color: #45a049; /* Darker green */
-    }
-  </style>
 </head>
 
 <body>
