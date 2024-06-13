@@ -45,7 +45,7 @@
   <a-scene background="color: #DADADA">
     <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
 
-    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box" material="color: teal" position="0 0 -4" hit-handler ></a-entity>
+    <a-entity class="target" target="healthPoints: 10" geometry="primitive: box; width: 2; height: 2; depth: 2" material="color: teal" position="0 0 -4" hit-handler ></a-entity>
 
     <a-entity id="gun" shooter geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.3" material="color: red" click-to-shoot position="0 0 -1" wasd-controls></a-entity>
 
