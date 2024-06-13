@@ -33,37 +33,35 @@
 <body>
   <a-scene background="color: #DADADA">
   <a-entity position="0 1.6 -4">
-    <a-entity class="wallet-container" position="0 0 0">
-      <!-- Wallet Header -->
-      <a-entity class="wallet-header">
-        <a-entity class="wallet-title" text="value: Non-Custodial Wallet; color: #333"></a-entity>
-      </a-entity>
-
-      <!-- Wallet Balance -->
-      <a-entity class="wallet-balance" position="0 0 -0.5">
-        <a-entity class="balance-title" text="value: Wallet Balance; color: #666"></a-entity>
-        <a-entity class="balance" text="value: Balance: 0 BTC; color: #666"></a-entity>
-      </a-entity>
-
-      <!-- Wallet Actions -->
-      <a-entity class="wallet-actions" position="0 0 -1">
-        <a-entity class="actions-title" text="value: Actions; color: #666"></a-entity>
-        <!-- Send Bitcoin Button -->
-        <a-entity class="action-button" id="send-button" position="-1 0 0" text="value: Send Bitcoin; color: white; width: 2"></a-entity>
-        <!-- Receive Bitcoin Button -->
-        <a-entity class="action-button" id="receive-button" position="1 0 0" text="value: Receive Bitcoin; color: white; width: 2"></a-entity>
-      </a-entity>
-
-      <!-- Wallet Transactions -->
-      <a-entity class="wallet-transactions" position="0 0 -1.5">
-        <a-entity class="transactions-title" text="value: Transactions; color: #666"></a-entity>
-        <a-entity class="transaction-list" text="value: Transactions will be dynamically added here; color: #666"></a-entity>
-      </a-entity>
-    </a-entity>
+  <a-entity class="wallet-container" position="0 0 0">
+  <!-- Wallet Header -->
+  <a-entity class="wallet-header">
+  <a-entity class="wallet-title" text="value: Non-Custodial Wallet; color: #333"></a-entity>
   </a-entity>
-</a-scene>
 
-    
+   <!-- Wallet Balance -->
+   <a-entity class="wallet-balance" position="0 0 -0.5">
+   <a-entity class="balance-title" text="value: Wallet Balance; color: #666"></a-entity>
+   <a-entity class="balance" text="value: Balance: 0 BTC; color: #666"></a-entity>
+   </a-entity>
+
+   <!-- Wallet Actions -->
+   <a-entity class="wallet-actions" position="0 0 -1">
+   <a-entity class="actions-title" text="value: Actions; color: #666"></a-entity>
+   <!-- Send Bitcoin Button -->
+   <a-entity class="action-button" id="send-button" position="-1 0 0" text="value: Send Bitcoin; color: white; width: 2"></a-entity>
+   <!-- Receive Bitcoin Button -->
+   <a-entity class="action-button" id="receive-button" position="1 0 0" text="value: Receive Bitcoin; color: white; width: 2"></a-entity>
+   </a-entity>
+
+    <!-- Wallet Transactions -->
+    <a-entity class="wallet-transactions" position="0 0 -1.5">
+    <a-entity class="transactions-title" text="value: Transactions; color: #666"></a-entity>
+    <a-entity class="transaction-list" text="value: Transactions will be dynamically added here; color: #666"></a-entity>
+    </a-entity>
+    </a-entity>
+    </a-entity>
+
     <!-- Notification -->
     <a-entity id="notification" position="0 3 -5" text="value: You won 1 satoshi!; align: center; color: white; wrapCount: 15;"></a-entity>
 
