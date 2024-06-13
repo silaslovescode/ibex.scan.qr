@@ -122,7 +122,7 @@
         var x = (i % Math.ceil(Math.sqrt(numTargets))) * spacingX - planeWidth / 2;
         var z = Math.floor(i / Math.ceil(Math.sqrt(numTargets))) * spacingZ - planeHeight / 2;
         document.write('<a-entity class="target" target="healthPoints: 10" geometry="primitive: box; width: 4; height: 4; depth: 4" material="color:#Ffd700" position="' + x + ' 0 ' + z + '" hit-handler></a-entity>
-></a-entity>');
+');
       }
     </script>
     </a-scene>
