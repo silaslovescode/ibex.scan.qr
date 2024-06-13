@@ -8,49 +8,40 @@
   <script src="aframe-super-shooter-kit.min.js"></script>
   <script src="aframe.min.js"></script>
   <script>
-    
-    /**
-     * Click mouse to shoot.
-     */
+    // Your JavaScript code
+    // Click mouse to shoot
     AFRAME.registerComponent('click-to-shoot', {
       init: function () {
         document.body.addEventListener('mousedown', () => { this.el.emit('shoot'); });
       }
     });
 
-    /**
-     * Change color when hit.
-     */
-AFRAME.registerComponent('hit-handler', {
-  dependencies: ['material'],
-
-  init: function () {
-    var el = this.el;
-
-    el.addEventListener('hit', () => {
-      el.setAttribute('visible', false); // Set visible to false to make the object invisible
+    // Change color when hit
+    AFRAME.registerComponent('hit-handler', {
+      dependencies: ['material'],
+      init: function () {
+        var el = this.el;
+        el.addEventListener('hit', () => {
+          el.setAttribute('visible', false); // Set visible to false to make the object invisible
+        });
+      }
     });
-  }
-});
-
   </script>
-  <style> 
-.target {
-  animation-name: moveNPC;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-@keyframes movetarget {
-  0% { transform: translate(0, 0, 0); }
-  50% { transform: translate(5, 0, 5); }
-  100% { transform: translate(0, 0, 0); }
-}
- </style> 
+  <style>
+    .target {
+      animation-name: moveNPC;
+      animation-duration: 5s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+    @keyframes moveNPC {
+      0% { transform: translate(0, 0, 0); }
+      50% { transform: translate(5, 0, 5); }
+      100% { transform: translate(0, 0, 0); }
+    }
+  </style>
 </head>
-
 <body>
-  
   <a-scene background="color: #DADADA">
     <a-entity id="bulletTemplate" bullet geometry="primitive: sphere; radius: 0.5" material="color: purple" wasd-controls"></a-entity>
 
